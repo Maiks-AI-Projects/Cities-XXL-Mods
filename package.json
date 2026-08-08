@@ -1,0 +1,14 @@
+{
+  "name": "cities-xxl-mods",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:bonus-upkeep": "node mods/balanced-production-bonuses/build.mjs",
+    "scan": "node tools/scan-game-archive.mjs",
+    "inspect-classes": "node tools/inspect-game-classes.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
