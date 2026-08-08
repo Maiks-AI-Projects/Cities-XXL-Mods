@@ -7,7 +7,7 @@ const EXPECTED_DATA_PAK_SHA256 = 'aadac92c0e2e8dd8649066b21a1a9af18f4639332b54d2
 const CLASS_PATH = 'data/design/buildings/construction/citylink/citylinkintercity_highway.class'
 const OUTPUT_NAME = 'zzz_CitiesXXL_AffordableHighwayLink_1_5_0.patch'
 const ORIGINAL_MONTHLY_COST = 50_000
-const MOD_MONTHLY_COST = 25_000
+const MOD_MONTHLY_COST = 1_000
 
 function valueOf(text, element) {
   const match = text.match(new RegExp(`<${element}>(-?\\d+)</${element}>`, 'i'))
@@ -60,7 +60,7 @@ if (verification.entries.length !== 1 || verification.entries[0]?.name !== CLASS
 }
 const verifiedText = extractMcpkEntry(patch, verification.entries[0]).toString('latin1')
 if (valueOf(verifiedText, 'MaxMonthlyCost') !== MOD_MONTHLY_COST || valueOf(verifiedText, 'UpkeepCost') !== MOD_MONTHLY_COST) {
-  throw new Error('Generated archive did not preserve the intended 25,000 monthly costs.')
+  throw new Error('Generated archive did not preserve the intended 1,000 monthly costs.')
 }
 
 const outputFolder = resolve('dist')

@@ -1,11 +1,15 @@
 # Affordable Highway Link
 
-Reduces the Cities XXL intercity **Highway Link** monthly cost by 50%:
+Rebalances the Cities XXL intercity **Highway Link** around its increased
+capacity. A normal road link provides 20 freight and 20 passenger capacity for
+100 per month; the highway link provides 100 of each for 1,000 per month. That
+is 5× the capacity for 10× the upkeep, retaining a premium for the stronger
+connection without the vanilla 500× price jump.
 
 | Field | Vanilla | Modded |
 |---|---:|---:|
-| Maximum monthly cost | 50,000 | 25,000 |
-| Base upkeep | 50,000 | 25,000 |
+| Maximum monthly cost | 50,000 | 1,000 |
+| Base upkeep | 50,000 | 1,000 |
 
 Only this class is overridden:
 
