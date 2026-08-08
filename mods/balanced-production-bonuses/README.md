@@ -16,6 +16,9 @@ public services, roads, and the eco-factory.
 The production percentage, jobs, construction cost, unlock requirements,
 models, and layouts are unchanged.
 
+The complete building-by-building comparison is available in
+[`docs/balanced-production-bonuses-buildings.md`](../../docs/balanced-production-bonuses-buildings.md).
+
 ## Build
 
 ```powershell
@@ -40,4 +43,3 @@ This first release should be treated as a balance beta. Cities XXL separates
 the advertised monthly maximum, base upkeep, and worker costs. Both editable
 budget fields are halved, but the observed city-budget result must be verified
 in a loaded city before the exact effective reduction is claimed.
-
