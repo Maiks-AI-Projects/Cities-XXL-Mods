@@ -27,12 +27,13 @@ function sha1(input) {
   return createHash('sha1').update(input).digest()
 }
 
-export function listMcpkEntries(archive) {
-  if (archive.subarray(0, 4).toString('ascii') !== 'MCPK') throw new Error('Not an MCPK archive.')
-  if (archive.readUInt32LE(4) !== 3) throw new Error('Unsupported MCPK version.')
-  const tableAddress = archive.readUInt32LE(32)
-  const fileCount = archive.readUInt32LE(36)
-  const table = rc4(archive.subarray(tableAddress))
+export function listMcpkTable(header, encryptedTable) {
+  if (header.length < HEADER_SIZE || header.subarray(0, 4).toString('ascii') !== 'MCPK') {
+    throw new Error('Not an MCPK archive.')
+  }
+  if (header.readUInt32LE(4) !== 3) throw new Error('Unsupported MCPK version.')
+  const fileCount = header.readUInt32LE(36)
+  const table = rc4(encryptedTable)
   const entries = []
   let offset = 0
   for (let index = 0; index < fileCount; index += 1) {
@@ -46,7 +47,19 @@ export function listMcpkEntries(archive) {
     offset += 40 + nameLength
     entries.push({ name, compressedSize, size, address, checksum, compression })
   }
-  return { version: archive.readUInt32LE(4), build: archive.readInt32LE(8), entries }
+  return {
+    version: header.readUInt32LE(4),
+    build: header.readInt32LE(8),
+    payloadSha1: header.subarray(12, 32).toString('hex'),
+    entries
+  }
+}
+
+export function listMcpkEntries(archive) {
+  if (archive.length < HEADER_SIZE) throw new Error('Not an MCPK archive.')
+  const tableAddress = archive.readUInt32LE(32)
+  if (tableAddress < HEADER_SIZE || tableAddress > archive.length) throw new Error('Invalid MCPK table address.')
+  return listMcpkTable(archive.subarray(0, HEADER_SIZE), archive.subarray(tableAddress))
 }
 
 export function extractMcpkEntry(archive, entry) {
@@ -97,4 +110,3 @@ export function createMcpkArchive(files, { build = 955 } = {}) {
   header.writeUInt32LE(files.length, 36)
   return Buffer.concat([header, payload])
 }
-

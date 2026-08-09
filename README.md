@@ -11,11 +11,13 @@ copy of the game and create removable `.patch` archives in `dist/`.
 - **Balanced Production Bonuses** — reduces the monthly upkeep of genuine
   citywide production-bonus buildings by 50% while preserving their original
   construction cost, unlock conditions, and production multiplier.
-- Research into safely restoring or rebuilding omitted rail gameplay.
+- **Personal Intercity Rail** — active experimental build exposing the dormant
+  station, surface railway, and international rail-link chain. Its generated
+  patch is statically verified and intentionally awaits a new in-game test
+  world before runtime functionality is claimed.
 
 ## Safety
 
 Each gameplay change is packaged separately. Installing or removing one mod
 must not require editing a save file. Always close Cities XXL before adding or
 removing a patch.
-

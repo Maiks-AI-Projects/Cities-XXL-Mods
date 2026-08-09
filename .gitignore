@@ -2,6 +2,7 @@ node_modules/
 dist/
 extracted/
 work/
+research/legacy/
 *.pak
 *.patch
 *.dll
@@ -9,4 +10,4 @@ work/
 *.log
 .DS_Store
 Thumbs.db
-
+.codex/
