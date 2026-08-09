@@ -8,6 +8,10 @@ copy of the game and create removable `.patch` archives in `dist/`.
 
 ## Planned mods
 
+- **[Self-Funding Airports (experimental research)](mods/self-funding-airports/)** — a separate, read-only
+  diagnostic and feasibility study for utilization-based airport operating-cost
+  rebates. No economic changes are enabled until attribution and rebate safety
+  are proven.
 - **Balanced Production Bonuses** — reduces the monthly upkeep of genuine
   citywide production-bonus buildings by 50% while preserving their original
   construction cost, unlock conditions, and production multiplier.

@@ -5,10 +5,16 @@
   "type": "module",
   "scripts": {
     "build:bonus-upkeep": "node mods/balanced-production-bonuses/build.mjs",
+    "build:self-funding-airports-diagnostic": "node mods/self-funding-airports/build.mjs",
+    "extract": "node tools/extract-game-files.mjs",
     "scan": "node tools/scan-game-archive.mjs",
-    "inspect-classes": "node tools/inspect-game-classes.mjs"
+    "inspect-classes": "node tools/inspect-game-classes.mjs",
+    "test:self-funding-airports": "node mods/self-funding-airports/test.mjs"
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "luaparse": "^0.3.1"
   }
 }
