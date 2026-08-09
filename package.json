@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build:bonus-upkeep": "node mods/balanced-production-bonuses/build.mjs",
+    "build:intercity-rail": "node mods/intercity-rail/build.mjs",
     "scan": "node tools/scan-game-archive.mjs",
     "inspect-classes": "node tools/inspect-game-classes.mjs"
   },
