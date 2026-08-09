@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "build:bonus-upkeep": "node mods/balanced-production-bonuses/build.mjs",
+    "build:commuter-observer": "node mods/intercity-commuters-fix/build.mjs",
+    "package:commuter-observer": "node mods/intercity-commuters-fix/package-observer.mjs",
     "scan": "node tools/scan-game-archive.mjs",
-    "inspect-classes": "node tools/inspect-game-classes.mjs"
+    "inspect-classes": "node tools/inspect-game-classes.mjs",
+    "inspect-entry": "node tools/inspect-game-entry.mjs"
   },
   "engines": {
     "node": ">=22"

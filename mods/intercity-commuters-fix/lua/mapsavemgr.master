@@ -1,0 +1,55 @@
+-- Cities XXL Intercity Commuters Fix, observer-only bootstrap.
+-- Loaded by the stock MapSaveMgr.lua GameUpdate:DoFile extension point.
+
+CXXLCOMMUTERS = CXXLCOMMUTERS or {}
+CXXLCOMMUTERS.Version = "0.1.0-observer"
+CXXLCOMMUTERS.Native = CXXLCOMMUTERS.Native or nil
+CXXLCOMMUTERS.LoadAttempted = CXXLCOMMUTERS.LoadAttempted or false
+CXXLCOMMUTERS.TerminalStatusLogged = CXXLCOMMUTERS.TerminalStatusLogged or false
+
+function CXXLCOMMUTERS:LoadNative()
+	if (self.Native ~= nil) then return true end
+	if (self.LoadAttempted == true) then return false end
+	self.LoadAttempted = true
+	package.cpath = package.cpath..";./?.dll"
+	local Loader, LoadError = package.loadlib("cxxlcommuters.dll", "luaopen_cxxlcommuters")
+	if (Loader == nil) then
+		LOG_ERROR("Intercity Commuters observer DLL load failed: "..tostring(LoadError))
+		return false
+	end
+	local Native = Loader()
+	if ((Native == nil) or (Native.observer_only ~= true) or (Native.hooks_installed ~= false)) then
+		LOG_ERROR("Intercity Commuters refused an invalid or behavior-enabled observer DLL")
+		return false
+	end
+	self.Native = Native
+	local Started, StartStatus = self.Native.start()
+	if (Started ~= true) then
+		LOG_ERROR("Intercity Commuters observer refused this process: "..tostring(StartStatus))
+		return false
+	end
+	LOG_INFO("Intercity Commuters observer started incremental build verification")
+	return true
+end
+
+function CXXLCOMMUTERS:Poll()
+	if ((self.Native == nil) and (self:LoadNative() ~= true)) then return end
+	local Status = self.Native.poll(524288)
+	if ((Status == nil) or (self.TerminalStatusLogged == true)) then return end
+	if (Status.phase == "verified") then
+		self.TerminalStatusLogged = true
+		LOG_INFO("Intercity Commuters observer verified Cities XXL 1.5.0; no simulation hooks installed")
+	elseif (Status.phase == "failed") then
+		self.TerminalStatusLogged = true
+		LOG_ERROR("Intercity Commuters observer verification failed: "..tostring(Status.message))
+	end
+end
+
+if (CXXLCOMMUTERS.MapSaveMgrWrapped ~= true) then
+	CXXLCOMMUTERS.MapSaveMgrWrapped = true
+	CXXLCOMMUTERS.OriginalMapSaveDoSave = MapSaveMgr.DoSave
+	function MapSaveMgr:DoSave(...)
+		CXXLCOMMUTERS:Poll()
+		return CXXLCOMMUTERS.OriginalMapSaveDoSave(self, ...)
+	end
+end
